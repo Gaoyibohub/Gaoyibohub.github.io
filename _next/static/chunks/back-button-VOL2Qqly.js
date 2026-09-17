@@ -1,1 +1,0 @@
-import{i as e}from"./framework-BaE7mD_r.js";var t=e();function n({fallbackHref:e=`/`}){return(0,t.jsx)(`a`,{className:`project-return`,href:e,onClick:e=>{window.history.length>1&&(e.preventDefault(),window.history.back())},children:`← 返回上一级`})}export{n as default};

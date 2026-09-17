@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>《寄居者》AIGC 漫剧 — 高一博</title>
+  <meta name="description" content="AIGC 漫剧《寄居者》成片、剧本、分镜与人物、场景、道具资产展示。">
+  <style>
+    :root{--blue:#0794d7;--ink:#0a0d11;--panel:#11171d;--soft:#151d24;--white:#f5f7f8;--muted:#9ba8b2;--line:rgba(255,255,255,.14);--ease:cubic-bezier(.16,1,.3,1)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--ink)}
+    body{margin:0;overflow-x:hidden;background:var(--ink);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+    body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}button{font:inherit}img{display:block;max-width:100%}
+    .shell{width:min(calc(100% - 96px),1440px);margin-inline:auto}
+    .topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:90px;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:760;letter-spacing:.09em;text-transform:uppercase}
+    .brand::before{content:"";width:18px;height:18px;border:5px solid currentColor;border-right-color:transparent;border-radius:50%;transform:rotate(-24deg)}
+    .crumb{color:var(--muted);font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+    .back{justify-self:end;display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border:1px solid var(--line);border-radius:999px;font-size:16px;font-weight:700;transition:background .25s,color .25s}
+    .back:hover,.back:focus-visible{background:var(--white);color:var(--ink);outline:none}
+    .hero{display:grid;grid-template-columns:8fr 4fr;gap:64px;align-items:end;padding:116px 0 66px}
+    .eyebrow,.section-index{margin:0 0 18px;color:var(--blue);font-size:14px;font-weight:750;letter-spacing:.19em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(84px,11vw,168px);font-weight:520;letter-spacing:-.085em;line-height:.78}
+    .hero-copy{max-width:520px;padding-bottom:6px}.hero-copy p{margin:0;font-size:19px;line-height:1.75;color:#c8d0d6}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.meta span{display:inline-flex;align-items:center;min-height:38px;padding:0 15px;border:1px solid var(--line);border-radius:999px;color:#dbe1e5;font-size:14px}
+    .film{padding-bottom:106px}
+    .film-frame{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:28px;background:#050607}
+    .film-cover{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#050607;cursor:pointer;color:#fff}
+    .film-cover img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter .5s}
+    .film-cover::after{content:"";position:absolute;inset:0;background:rgba(3,6,8,.2)}
+    .play{position:absolute;z-index:2;left:50%;top:50%;display:grid;width:92px;height:92px;place-items:center;border:1px solid rgba(255,255,255,.72);border-radius:50%;background:rgba(7,13,17,.58);transform:translate(-50%,-50%);font-size:34px;line-height:1;transition:transform .35s var(--ease),background .25s}
+    .film-cover:hover img,.film-cover:focus-visible img{transform:scale(1.025);filter:brightness(.8)}
+    .film-cover:hover .play{transform:translate(-50%,-50%) scale(1.08);background:var(--blue)}
+    .film-cover:focus-visible{outline:3px solid var(--blue);outline-offset:5px}
+    .film-frame iframe{width:100%;height:100%;border:0}
+    .film-note{display:flex;justify-content:space-between;gap:24px;margin-top:20px;color:var(--muted);font-size:16px;line-height:1.6}
+    .film-note a{color:#fff;border-bottom:1px solid currentColor}
+    .documents{padding:0}
+    .document-head{display:grid;grid-template-columns:5fr 7fr;gap:64px;align-items:end;padding:0 0 38px;border-bottom:1px solid var(--line)}
+    .document-head h2{margin:0;font-size:clamp(54px,6vw,90px);font-weight:560;letter-spacing:-.06em;line-height:.92}
+    .document-head>p{max-width:620px;justify-self:end;margin:0;color:#c8d0d6;font-size:18px;line-height:1.75}
+    .document-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .document-tabs button{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;min-height:148px;padding:24px 28px;border:0;border-right:1px solid var(--line);background:transparent;color:#6f7b84;text-align:left;cursor:pointer;transition:background .25s,color .25s}
+    .document-tabs button:last-child{border-right:0}.document-tabs button:hover,.document-tabs button:focus-visible,.document-tabs button.is-active{background:#121920;color:#fff;outline:none}.document-tabs small{grid-column:1/-1;font-size:12px;font-weight:800;letter-spacing:.14em}.document-tabs strong{font-size:clamp(28px,3vw,44px);font-weight:560;letter-spacing:-.04em}.document-tabs span{font-size:25px}
+    .document-panel{display:none;padding:72px 0 128px}.document-panel.is-active{display:block;animation:panel-in .45s var(--ease)}
+    .concept-grid{display:grid;grid-template-columns:7fr 5fr;gap:24px;margin-bottom:72px}
+    .concept-quote{display:flex;min-height:330px;align-items:flex-end;margin:0;padding:42px;border:1px solid var(--line);background:linear-gradient(145deg,#10171d,#0a0d11);font-size:clamp(36px,4.8vw,68px);font-weight:540;letter-spacing:-.05em;line-height:1.05}
+    .concept-meta{display:grid;border-top:1px solid var(--line)}.concept-meta article{display:grid;grid-template-columns:92px 1fr;gap:20px;padding:24px 4px;border-bottom:1px solid var(--line)}.concept-meta small{color:var(--blue);font-weight:760;letter-spacing:.1em}.concept-meta p{margin:0;color:#c4cdd3;line-height:1.7}
+    .doc-subhead{display:flex;justify-content:space-between;gap:32px;align-items:end;margin:0 0 28px}.doc-subhead h3{margin:0;font-size:clamp(36px,4vw,58px);font-weight:560;letter-spacing:-.045em}.doc-subhead p{max-width:630px;margin:0;color:#9ca8b1;line-height:1.7}
+    .scene-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:74px}
+    .scene-list details{background:#0d1217;padding:0 28px}.scene-list summary{display:grid;grid-template-columns:72px 1fr auto;gap:16px;align-items:center;min-height:94px;cursor:pointer;list-style:none}.scene-list summary::-webkit-details-marker{display:none}.scene-list summary span:first-child{color:var(--blue);font-size:13px;font-weight:800;letter-spacing:.08em}.scene-list summary strong{font-size:18px}.scene-list summary::after{content:"+";font-size:26px;color:#697781}.scene-list details[open] summary::after{content:"−"}.scene-copy{padding:0 0 30px;color:#c7cfd5;line-height:1.75}.scene-copy p{margin:0 0 15px}.dialogue{margin:20px 0;padding-left:18px;border-left:2px solid var(--blue);color:#fff}.dialogue strong{display:block;margin-bottom:4px;color:#7d8992;font-size:12px;letter-spacing:.1em}
+    .season-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,34%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px}.episode-card{scroll-snap-align:start;min-height:250px;padding:26px;border:1px solid var(--line);background:#0d1217}.episode-card small{color:var(--blue);font-weight:800;letter-spacing:.1em}.episode-card h4{margin:18px 0 12px;font-size:26px;font-weight:600}.episode-card p{margin:0;color:#aeb8bf;line-height:1.7}
+    .board-summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}.board-summary span{padding:9px 14px;border:1px solid var(--line);border-radius:999px;color:#b7c1c8;font-size:14px}
+    .board-wrap{overflow-x:auto;border:1px solid var(--line)}.board-table{width:100%;min-width:1040px;border-collapse:collapse}.board-table th,.board-table td{padding:20px 18px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.board-table th{position:sticky;top:0;background:#121920;color:#7f8d96;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.board-table td{color:#c6cfd5;line-height:1.55}.board-table td:first-child{width:72px;color:var(--blue);font-size:20px;font-weight:760}.board-table td:nth-child(2){width:160px;white-space:nowrap;color:#fff}.board-table td:nth-child(4){width:180px}.board-table td:nth-child(5){width:180px;color:#91a0aa}
+    .board-pagination{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:20px}.board-pagination span{color:#8c9aa4;font-size:14px}.board-pagination div{display:flex;gap:8px}.board-pagination button{min-width:110px;min-height:46px;border:1px solid var(--line);background:transparent;color:#fff;cursor:pointer}.board-pagination button:hover,.board-pagination button:focus-visible{background:#fff;color:#111;outline:none}.board-pagination button:disabled{opacity:.35;cursor:not-allowed}
+    .assets{background:#e9e8e4;color:#111315;padding:118px 0 132px}
+    .asset-head{display:grid;grid-template-columns:5fr 7fr;gap:64px;align-items:end;padding-bottom:36px;border-bottom:1px solid rgba(17,19,21,.2)}
+    .asset-head .section-index{color:#087fb9}.asset-head h2{margin:0;font-size:clamp(54px,6vw,90px);font-weight:560;letter-spacing:-.06em;line-height:.92}
+    .asset-head p{max-width:620px;justify-self:end;margin:0;font-size:18px;line-height:1.75}
+    .asset-tabs{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:64px;background:rgba(233,232,228,.94);border-bottom:1px solid rgba(17,19,21,.2);backdrop-filter:blur(16px)}
+    .asset-tabs button{min-height:74px;border:0;border-right:1px solid rgba(17,19,21,.16);background:transparent;color:rgba(17,19,21,.5);cursor:pointer;font-size:18px;font-weight:750;text-align:left;padding:0 20px;transition:background .25s,color .25s}
+    .asset-tabs button:last-child{border-right:0}.asset-tabs button:hover,.asset-tabs button:focus-visible,.asset-tabs button.is-active{background:#fff;color:#111315;outline:none}.asset-tabs small{display:block;margin-bottom:5px;font-size:12px;letter-spacing:.12em}
+    .asset-panel{display:none}.asset-panel.is-active{display:block;animation:panel-in .45s var(--ease)}
+    @keyframes panel-in{from{opacity:0;transform:translateY(20px)}}
+    .character-browser{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px}
+    .character-stage{position:relative;display:block;width:100%;height:min(76vh,820px);padding:0;overflow:hidden;border:0;background:#12171c;cursor:zoom-in;color:#fff}
+    .character-stage img{width:100%;height:100%;object-fit:contain}.stage-meta{position:absolute;left:24px;right:24px;bottom:20px;display:flex;justify-content:space-between;gap:20px;color:rgba(255,255,255,.84);font-size:16px}
+    .character-list{display:grid;align-content:start;max-height:min(76vh,820px);overflow:auto;border-top:1px solid rgba(17,19,21,.2)}
+    .character-list button{display:grid;grid-template-columns:76px 1fr auto;gap:16px;align-items:center;min-height:94px;padding:8px 0;border:0;border-bottom:1px solid rgba(17,19,21,.16);background:transparent;color:rgba(17,19,21,.54);text-align:left;cursor:pointer;font-size:16px}
+    .character-list button:hover,.character-list button:focus-visible,.character-list button.is-active{color:#111315;outline:none}.character-list img{width:76px;height:76px;object-fit:cover;background:#d5d5d2}.character-list span:last-child{padding-right:10px;font-size:18px;opacity:0}.character-list button.is-active span:last-child{opacity:1}
+    .scene-tools{display:flex;justify-content:flex-end;gap:10px;margin-bottom:18px}.scene-tools button{width:48px;height:48px;border:1px solid rgba(17,19,21,.28);border-radius:50%;background:transparent;cursor:pointer;font-size:20px}.scene-tools button:hover,.scene-tools button:focus-visible{background:#111;color:#fff;outline:none}
+    .scene-strip{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:20px;scrollbar-color:#111 transparent}
+    .scene-card{flex:0 0 min(78vw,1000px);scroll-snap-align:start;margin:0}.asset-open{display:block;width:100%;padding:0;border:0;background:#111;cursor:zoom-in}.scene-card .asset-open{aspect-ratio:16/9;overflow:hidden}.scene-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}.scene-card button:hover img,.scene-card button:focus-visible img{transform:scale(1.025)}.scene-card button:focus-visible,.prop-card button:focus-visible,.character-stage:focus-visible{outline:3px solid var(--blue);outline-offset:5px}.scene-card figcaption,.prop-card figcaption{display:flex;justify-content:space-between;gap:18px;margin-top:14px;color:rgba(17,19,21,.62);font-size:15px}.scene-card figcaption span:first-child,.prop-card figcaption span:first-child{color:#111;font-weight:700}
+    .prop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:44px 20px}.prop-card{margin:0}.prop-card .asset-open{aspect-ratio:1/1;background:#d8d7d3;overflow:hidden}.prop-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}.prop-card:hover img{transform:scale(1.035)}
+    .end{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;padding:104px 0}.end h2{margin:8px 0 0;font-size:clamp(54px,7vw,104px);font-weight:560;letter-spacing:-.06em;line-height:.92}.end-link{display:inline-flex;align-items:center;min-height:54px;padding:0 24px;border:1px solid var(--line);border-radius:999px;font-size:16px;font-weight:750}.end-link:hover,.end-link:focus-visible{background:#fff;color:#111;outline:none}
+    .footer{display:flex;justify-content:space-between;gap:24px;padding:30px 0 46px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;letter-spacing:.08em}
+    dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:#080a0c;color:#fff}dialog::backdrop{background:#080a0c}.viewer{position:relative;display:grid;width:100%;height:100%;place-items:center;padding:70px 86px 76px}.viewer-media{display:grid;width:100%;height:100%;place-items:center}.viewer-media img{max-width:100%;max-height:100%;object-fit:contain}.viewer-close,.viewer-arrow{position:absolute;z-index:2;display:grid;place-items:center;min-width:50px;min-height:50px;border:1px solid rgba(255,255,255,.48);background:#101419;color:#fff;cursor:pointer;font-size:16px}.viewer-close{top:22px;right:26px;padding:0 17px}.viewer-arrow{top:50%;width:50px;border-radius:50%;transform:translateY(-50%);font-size:22px}.viewer-prev{left:20px}.viewer-next{right:20px}.viewer-meta{position:absolute;left:28px;right:28px;bottom:22px;display:flex;justify-content:space-between;gap:24px;color:#adb7bf;font-size:14px;letter-spacing:.06em}
+    @media(max-width:980px){.topbar{grid-template-columns:1fr auto}.crumb{display:none}.hero{grid-template-columns:1fr}.document-head,.asset-head{grid-template-columns:1fr;gap:24px}.document-head>p,.asset-head p{justify-self:start}.concept-grid{grid-template-columns:1fr}.scene-list{grid-template-columns:1fr}.character-browser{grid-template-columns:1fr}.character-list{grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);overflow-x:auto;max-height:none}.prop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:680px){.shell{width:calc(100% - 36px)}.topbar{min-height:74px}.brand{font-size:14px}.back{min-height:42px;padding:0 14px;font-size:14px}.hero{padding:72px 0 46px}h1{font-size:82px}.hero-copy p{font-size:17px}.film{padding-bottom:72px}.film-frame{border-radius:18px}.play{width:66px;height:66px}.film-note{flex-direction:column;font-size:15px}.document-tabs{grid-template-columns:1fr}.document-tabs button{min-height:108px;padding:20px 18px;border-right:0}.document-panel{padding:54px 0 84px}.concept-grid{margin-bottom:54px}.concept-quote{min-height:260px;padding:28px}.concept-meta article{grid-template-columns:1fr;gap:8px}.doc-subhead{align-items:start;flex-direction:column}.scene-list details{padding:0 18px}.scene-list summary{grid-template-columns:58px 1fr auto}.season-strip{grid-auto-columns:86%}.board-pagination{align-items:flex-start;flex-direction:column}.assets{padding:78px 0 90px}.asset-tabs{margin-bottom:38px}.asset-tabs button{min-height:66px;padding:0 10px;font-size:16px}.character-stage{height:52vh}.character-list{grid-auto-columns:minmax(180px,1fr)}.character-list button{grid-template-columns:60px 1fr;min-height:78px}.character-list img{width:60px;height:60px}.character-list span:last-child{display:none}.scene-card{flex-basis:88vw}.prop-grid{gap:32px 12px}.end{grid-template-columns:1fr}.footer{flex-direction:column}.viewer{padding:66px 16px 80px}.viewer-close{top:12px;right:12px}.viewer-arrow{top:auto;bottom:16px;transform:none}.viewer-prev{left:16px}.viewer-next{right:16px}.viewer-meta{left:72px;right:72px;bottom:29px;justify-content:center}.viewer-title{display:none}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <header class="topbar shell"><a class="brand" href="/">Yibo Gao</a><span class="crumb">01 / AIGC Drama</span><a class="back" href="/videos/">← 视频总览</a></header>
+  <main>
+    <section class="hero shell" aria-labelledby="page-title">
+      <div><p class="eyebrow">AIGC 漫剧 · 01</p><h1 id="page-title">寄居者</h1></div>
+      <div class="hero-copy"><p>以完整成片为入口，向下拆解剧本、分镜、人物、场景与关键道具，让故事从叙事设计到视觉资产形成一套可检索、可延展的创作系统。</p><div class="meta"><span>AIGC 漫剧</span><span>悬疑氛围</span><span>资产化制作</span></div></div>
+    </section>
+
+    <section class="film shell" aria-label="寄居者完整成片">
+      <div class="film-frame" id="filmFrame">
+        <button class="film-cover" id="playFilm" type="button" aria-label="播放寄居者完整成片"><img src="/assets/videos/jijuzhe/cover.jpg" width="1672" height="941" alt="寄居者视频封面"><span class="play" aria-hidden="true">▶</span></button>
+      </div>
+      <div class="film-note"><span>点击封面播放完整成片</span><a href="https://www.bilibili.com/video/BV1rNYS6ZEMf/?spm_id_from=333.1387.homepage.video_card.click&amp;vd_source=e25de6f3c28bcc494687a888b2bf2d33" target="_blank" rel="noopener noreferrer">在哔哩哔哩打开 ↗</a></div>
+    </section>
+
+    <section class="documents shell" aria-label="剧本与分镜">
+      <nav class="document-tabs" role="tablist" aria-label="制作文档分类">
+        <button type="button" data-document-tab="scriptPanel" role="tab" aria-selected="false"><small>01 / SCRIPT</small><strong>查看剧本</strong><span>→</span></button>
+        <button type="button" data-document-tab="storyboardPanel" role="tab" aria-selected="false"><small>02 / STORYBOARD</small><strong>查看分镜</strong><span>→</span></button>
+      </nav>
+
+      <div class="document-panel" id="scriptPanel" aria-hidden="true">
+        <div class="concept-grid">
+          <blockquote class="concept-quote">“你以为有人住进了你的房子，后来才发现，她住进的是你。”</blockquote>
+          <div class="concept-meta">
+            <article><small>悬念</small><p>林影究竟是失踪的前租客、苏言的第二人格、被复制的意识，还是这具身体原本的主人？</p></article>
+            <article><small>结构</small><p>EP01–06 建立“林影是谁”；EP07–14 反转为“苏言是谁”；EP15–20 升级为“谁拥有这具身体”。</p></article>
+            <article><small>规格</small><p>20 集悬疑惊悚短剧；单集约 2–3 分钟。本页成片与分镜对应 EP01《多余的房客》。</p></article>
+          </div>
+        </div>
+
+        <div class="doc-subhead"><h3>EP01｜多余的房客</h3><p>苏言搬进新公寓后，发现房间里不断出现不属于自己的生活痕迹。阁楼中的旧相册，将她和失踪半年的前租客“林影”联系在一起。</p></div>
+        <div class="scene-list">
+          <details open><summary><span>01-01</span><strong>新公寓客厅｜夜</strong></summary><div class="scene-copy"><p>纸箱堆在墙边。苏言把画具一件件摆上桌，最后把马克笔按色号从浅到深排列整齐。她停下来确认一遍，才关灯离开。</p><div class="dialogue"><strong>苏言</strong>换个地方，重新开始。</div></div></details>
+          <details><summary><span>01-02</span><strong>工作区｜次日早晨</strong></summary><div class="scene-copy"><p>苏言坐下准备画画，发现昨晚排列整齐的画笔全被打乱。她皱眉重新摆好。伸手拿水杯时，又看到杯沿上有一个深红色口红印。</p><div class="dialogue"><strong>苏言</strong>我昨天……涂口红了吗？</div><p>她摸了摸自己的嘴唇。什么都没有。</p></div></details>
+          <details><summary><span>01-03</span><strong>阁楼｜傍晚</strong></summary><div class="scene-copy"><p>整理纸箱时，苏言发现楼梯尽头还有一扇旧门。她打开手机照明进入阁楼，在木箱里翻出一本旧相册。第一页，是一个小学女孩站在操场上的照片。</p><div class="dialogue"><strong>苏言</strong>这是我……三年级的时候。</div><p>她继续翻页。校门、旧居民楼、公交站，全是她从未见过的童年照片。一张纸条从相册中滑落：你终于看见我了。找了十二年，我们终于又住在一起了。</p></div></details>
+          <details><summary><span>01-04</span><strong>公寓客厅｜夜</strong></summary><div class="scene-copy"><p>陈峥与周屿检查完房屋和阁楼。</p><div class="dialogue"><strong>陈峥</strong>房东赵启明确认了，上一任租客叫林影。</div><div class="dialogue"><strong>苏言</strong>她现在在哪儿？</div><div class="dialogue"><strong>周屿</strong>半年前失踪。到现在没找到。</div><p>苏言低头看向相册。照片里的童年自己仿佛也在盯着她。</p></div></details>
+          <details><summary><span>01-05</span><strong>卧室｜深夜</strong></summary><div class="scene-copy"><p>警方离开后，衣柜方向传来轻响。苏言从厨房拿刀靠近，在深处发现一台隐藏摄像机。屏幕显示：连续录制 178 小时。她把录像导入电脑，看见一个年轻女人进入房间，整理她的画笔、用她的水杯、坐在熟睡的她身边替她盖好被子。</p><div class="dialogue"><strong>苏言</strong>你到底是谁？</div><div class="dialogue"><strong>林影</strong>别怕。我不是来伤害你的。<br>我是来替你活下去的。</div></div></details>
+          <details><summary><span>01-06</span><strong>卫生间 / 客厅｜凌晨至清晨</strong></summary><div class="scene-copy"><p>苏言发现眼角多了一颗陌生的痣，抽屉里出现刻着“影”字的深色口红，衣柜里还有她从不抽的薄荷烟和打火机。回到桌边，她竟下意识用右手拿笔——而她从小一直是左撇子。</p><div class="dialogue"><strong>林影</strong>你看，你已经记不清了。<br>这个身体，这段人生，本来就该是我的。</div><p>第二天，苏言的手不受控制地写下：你累了，休息吧。以后我来替你活下去。镜中的“苏言”慢慢扬起嘴角，无声做出口型：你好。</p></div></details>
+        </div>
+
+        <div class="doc-subhead"><h3>第一季｜20 集</h3><p>从“房间里多出一个人”推进到“谁拥有这具身体”，完整季纲按集浏览。</p></div>
+        <div class="season-strip" id="episodeStrip" aria-label="寄居者第一季分集剧情"></div>
+      </div>
+
+      <div class="document-panel" id="storyboardPanel" aria-hidden="true">
+        <div class="doc-subhead"><h3>EP01｜镜头执行表</h3><p>按原始分镜表保留镜号、时间、实际画面、景别 / 镜头方式与叙事作用；每页 10 镜，便于逐段对照成片。</p></div>
+        <div class="board-summary"><span>50 个镜头</span><span>00:00–01:59.7</span><span>5 项执行信息</span><span>对应上方完整成片</span></div>
+        <div class="board-wrap"><table class="board-table"><thead><tr><th>镜号</th><th>时间</th><th>视频实际画面</th><th>景别 / 镜头方式</th><th>作用</th></tr></thead><tbody id="storyboardRows"></tbody></table></div>
+        <div class="board-pagination"><span id="storyboardRange" aria-live="polite"></span><div><button id="storyboardPrev" type="button">← 上 10 镜</button><button id="storyboardNext" type="button">下 10 镜 →</button></div></div>
+      </div>
+    </section>
+
+    <section class="assets" aria-labelledby="assets-title">
+      <header class="asset-head shell"><div><p class="section-index">03 / Visual Assets</p><h2 id="assets-title">视觉资产。</h2></div><p>人物、场景与道具不作为零散图集堆叠，而是按创作类别分别浏览；点击主图可进入全屏查看。</p></header>
+      <div class="shell">
+        <nav class="asset-tabs" role="tablist" aria-label="视觉资产分类">
+          <button class="is-active" type="button" data-asset-tab="characters" aria-selected="true"><small>01 / 04</small>人物资产</button>
+          <button type="button" data-asset-tab="scenes" aria-selected="false"><small>02 / 10</small>场景资产</button>
+          <button type="button" data-asset-tab="props" aria-selected="false"><small>03 / 10</small>道具资产</button>
+        </nav>
+
+        <div class="asset-panel is-active" id="characters">
+          <div class="character-browser">
+            <button class="character-stage asset-open" id="characterStage" data-full="/assets/videos/jijuzhe/characters/su-yan.jpg" data-title="苏言 / 角色设定" type="button"><img id="characterImage" src="/assets/videos/jijuzhe/characters/su-yan.jpg" alt="苏言角色三视图与表情设定"><span class="stage-meta"><strong id="characterTitle">苏言 / 角色设定</strong><span>点击全屏 ↗</span></span></button>
+            <div class="character-list" aria-label="选择人物资产">
+              <button class="is-active" type="button" data-character-src="/assets/videos/jijuzhe/characters/su-yan.jpg" data-character-title="苏言 / 角色设定" data-character-alt="苏言角色三视图与表情设定"><img src="/assets/videos/jijuzhe/characters/su-yan.jpg" alt=""><span>苏言 / 角色设定</span><span>→</span></button>
+              <button type="button" data-character-src="/assets/videos/jijuzhe/characters/lin-ying.jpg" data-character-title="林影 / 角色设定" data-character-alt="林影角色三视图与表情设定"><img src="/assets/videos/jijuzhe/characters/lin-ying.jpg" alt=""><span>林影 / 角色设定</span><span>→</span></button>
+              <button type="button" data-character-src="/assets/videos/jijuzhe/characters/chen-zheng.jpg" data-character-title="陈峥 / 角色设定" data-character-alt="陈峥角色三视图与表情设定"><img src="/assets/videos/jijuzhe/characters/chen-zheng.jpg" alt=""><span>陈峥 / 角色设定</span><span>→</span></button>
+              <button type="button" data-character-src="/assets/videos/jijuzhe/characters/zhou-yu.jpg" data-character-title="周屿 / 角色设定" data-character-alt="周屿角色三视图与表情设定"><img src="/assets/videos/jijuzhe/characters/zhou-yu.jpg" alt=""><span>周屿 / 角色设定</span><span>→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="asset-panel" id="scenes">
+          <div class="scene-tools" aria-label="场景浏览控制"><button id="scenePrev" type="button" aria-label="向前浏览">←</button><button id="sceneNext" type="button" aria-label="向后浏览">→</button></div>
+          <div class="scene-strip" id="sceneStrip">
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-01.jpg" data-title="B-01 / 城市公寓" type="button"><img src="/assets/videos/jijuzhe/scenes/b-01.jpg" alt="夜晚城市公寓外景" loading="lazy"></button><figcaption><span>城市公寓</span><span>B-01</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-02.jpg" data-title="B-02 / 客厅" type="button"><img src="/assets/videos/jijuzhe/scenes/b-02.jpg" alt="夜晚公寓客厅" loading="lazy"></button><figcaption><span>客厅</span><span>B-02</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-03.jpg" data-title="B-03 / 工作台" type="button"><img src="/assets/videos/jijuzhe/scenes/b-03.jpg" alt="夜晚室内工作台" loading="lazy"></button><figcaption><span>工作台</span><span>B-03</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-04.jpg" data-title="B-04 / 卧室" type="button"><img src="/assets/videos/jijuzhe/scenes/b-04.jpg" alt="夜晚公寓卧室" loading="lazy"></button><figcaption><span>卧室</span><span>B-04</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-05.jpg" data-title="B-05 / 浴室" type="button"><img src="/assets/videos/jijuzhe/scenes/b-05.jpg" alt="夜晚公寓浴室" loading="lazy"></button><figcaption><span>浴室</span><span>B-05</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-06.jpg" data-title="B-06 / 厨房" type="button"><img src="/assets/videos/jijuzhe/scenes/b-06.jpg" alt="夜晚公寓厨房" loading="lazy"></button><figcaption><span>厨房</span><span>B-06</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-07.jpg" data-title="B-07 / 楼道" type="button"><img src="/assets/videos/jijuzhe/scenes/b-07.jpg" alt="昏暗旧楼楼道" loading="lazy"></button><figcaption><span>楼道</span><span>B-07</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-08.jpg" data-title="B-08 / 阁楼" type="button"><img src="/assets/videos/jijuzhe/scenes/b-08.jpg" alt="堆满纸箱的昏暗阁楼" loading="lazy"></button><figcaption><span>阁楼</span><span>B-08</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-09.jpg" data-title="B-09 / 旧物近景" type="button"><img src="/assets/videos/jijuzhe/scenes/b-09.jpg" alt="阁楼中的旧箱子和相册" loading="lazy"></button><figcaption><span>旧物近景</span><span>B-09</span></figcaption></figure>
+            <figure class="scene-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/scenes/b-10.jpg" data-title="B-10 / 衣柜" type="button"><img src="/assets/videos/jijuzhe/scenes/b-10.jpg" alt="暗光衣柜与摄像机" loading="lazy"></button><figcaption><span>衣柜</span><span>B-10</span></figcaption></figure>
+          </div>
+        </div>
+
+        <div class="asset-panel" id="props">
+          <div class="prop-grid">
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-01.jpg" data-title="G-01 / 旧相册" type="button"><img src="/assets/videos/jijuzhe/props/g-01.jpg" alt="旧相册" loading="lazy"></button><figcaption><span>旧相册</span><span>G-01</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-02.jpg" data-title="G-02 / 照片与便签" type="button"><img src="/assets/videos/jijuzhe/props/g-02.jpg" alt="照片与手写便签" loading="lazy"></button><figcaption><span>照片与便签</span><span>G-02</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-03.jpg" data-title="G-03 / 绘画工具" type="button"><img src="/assets/videos/jijuzhe/props/g-03.jpg" alt="桌面绘画工具" loading="lazy"></button><figcaption><span>绘画工具</span><span>G-03</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-04.jpg" data-title="G-04 / 口红印" type="button"><img src="/assets/videos/jijuzhe/props/g-04.jpg" alt="玻璃杯口红与照片" loading="lazy"></button><figcaption><span>口红印</span><span>G-04</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-05.jpg" data-title="G-05 / 烟盒与打火机" type="button"><img src="/assets/videos/jijuzhe/props/g-05.jpg" alt="烟盒和金属打火机" loading="lazy"></button><figcaption><span>烟盒与打火机</span><span>G-05</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-06.jpg" data-title="G-06 / 微型摄像机" type="button"><img src="/assets/videos/jijuzhe/props/g-06.jpg" alt="亮红灯的微型摄像机" loading="lazy"></button><figcaption><span>微型摄像机</span><span>G-06</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-07.jpg" data-title="G-07 / 厨刀" type="button"><img src="/assets/videos/jijuzhe/props/g-07.jpg" alt="厨房台面上的厨刀" loading="lazy"></button><figcaption><span>厨刀</span><span>G-07</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-08.jpg" data-title="G-08 / 来电" type="button"><img src="/assets/videos/jijuzhe/props/g-08.jpg" alt="显示陌生来电的手机" loading="lazy"></button><figcaption><span>来电</span><span>G-08</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-09.jpg" data-title="G-09 / 手稿与字条" type="button"><img src="/assets/videos/jijuzhe/props/g-09.jpg" alt="建筑手稿与替你活下去字条" loading="lazy"></button><figcaption><span>手稿与字条</span><span>G-09</span></figcaption></figure>
+            <figure class="prop-card"><button class="asset-open" data-full="/assets/videos/jijuzhe/props/g-10.jpg" data-title="G-10 / 木箱与纸箱" type="button"><img src="/assets/videos/jijuzhe/props/g-10.jpg" alt="木箱与搬家纸箱" loading="lazy"></button><figcaption><span>木箱与纸箱</span><span>G-10</span></figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="end shell"><div><p class="section-index">Project 01 / 01</p><h2>返回视频总览。</h2></div><a class="end-link" href="/videos/">查看全部分类 →</a></section>
+  </main>
+  <footer class="footer shell"><span>AIGC CONTENT CREATOR</span><span>© 2026 YIBO GAO</span></footer>
+
+  <dialog id="viewer" aria-label="全屏资产查看器"><div class="viewer"><button class="viewer-close" type="button">× CLOSE</button><button class="viewer-arrow viewer-prev" type="button" aria-label="上一张">←</button><div class="viewer-media"><img id="viewerImage" src="" alt=""></div><button class="viewer-arrow viewer-next" type="button" aria-label="下一张">→</button><div class="viewer-meta"><span class="viewer-title" id="viewerTitle"></span><span id="viewerCount"></span></div></div></dialog>
+  <script>
+    const play=document.getElementById('playFilm');
+    play.addEventListener('click',()=>{const iframe=document.createElement('iframe');iframe.src='https://player.bilibili.com/player.html?bvid=BV1rNYS6ZEMf&autoplay=1&high_quality=1&danmaku=0';iframe.title='《寄居者》完整成片';iframe.allow='autoplay; fullscreen; picture-in-picture';iframe.allowFullscreen=true;document.getElementById('filmFrame').replaceChildren(iframe)});
+
+    const documentTabs=[...document.querySelectorAll('[data-document-tab]')];
+    const documentPanels=[...document.querySelectorAll('.document-panel')];
+    documentTabs.forEach(tab=>tab.addEventListener('click',()=>{
+      const id=tab.dataset.documentTab;
+      documentTabs.forEach(item=>{const on=item===tab;item.classList.toggle('is-active',on);item.setAttribute('aria-selected',String(on))});
+      documentPanels.forEach(panel=>{const on=panel.id===id;panel.classList.toggle('is-active',on);panel.setAttribute('aria-hidden',String(!on))});
+      requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}));
+    }));
+
+    const episodes=[
+      ['EP01','多余的房客','苏言搬进新公寓后，发现房间里不断出现不属于自己的生活痕迹。阁楼中的旧相册，将她和失踪半年的前租客“林影”联系在一起。'],
+      ['EP02','178小时','苏言重新检查全部监控，发现每天凌晨3:17都会出现17分钟的录像缺口，而缺失时间里行动的人，似乎正是她自己。'],
+      ['EP03','另一个我','为了抓住“失去的17分钟”，苏言开始写日记，却发现第二天纸上会出现另一个人的笔迹。'],
+      ['EP04','消失的十二年','苏言回到许岚家寻找童年资料，发现自己8岁到15岁的影像几乎全部被人为清除。'],
+      ['EP05','她认识我妈妈','许岚承认十二年前事故后，苏言的惯用手、口味、性格都发生过改变，而这些变化与林影高度一致。'],
+      ['EP06','第三个女孩','学校旧档案证明当年并非只有苏言和林影两个人，与事故有关的第三名女孩同样使用过“苏言”这个名字。'],
+      ['EP07','被修改的人生','苏言发现自己的出生、学籍和病历存在相互冲突的记录，仿佛有人在事故后重新制造了一套“苏言”的人生。'],
+      ['EP08','11分钟','当年主治医生留下的一段录像显示，事故后醒来的女孩否认自己是苏言。'],
+      ['EP09','林影出现','林影第一次在苏言意识中稳定出现，她告诉苏言：真正的入侵者也许不是自己。'],
+      ['EP10','两份记忆','苏言开始看见林影的童年记忆，却在关键事故现场看到“自己”把林影锁进着火的房间。'],
+      ['EP11','我杀了她？','苏言重返青岚疗养院，发现火灾记忆曾被人为剪辑，而墙里留下了另一个受试者的警告。'],
+      ['EP12','寄居实验','官方资料将林影定义为“寄居人格”，但苏言发现实验档案本身也可能是用来误导她的。'],
+      ['EP13','谁创造了谁','更早的研究录像证明林影是真实个体，而苏言的身份则在实验中被反复定义和改写。'],
+      ['EP14','被交换的名字','许岚承认事故后，为了让唯一醒来的女孩以“苏言”身份继续生活，她同意了医院的身份重建。'],
+      ['EP15','妈妈的选择','许岚讲出事故夜的完整经过，同时警方发现半年前失踪的“前租客林影”拥有真实DNA和生活轨迹。'],
+      ['EP16','双生','DNA进一步显示苏言与林影极可能是同卵双胞胎；她们幼年被人为分开，并被纳入“寄居实验”。'],
+      ['EP17','前租客林影','苏言追查半年前真实存在的林影，发现她其实一直在寻找苏言，并试图在观察期结束前切断实验。'],
+      ['EP18','谁在身体里','苏言与林影的切换开始失控，她们却在317地下室发现真正的林影曾被关押，以及“第三人格”即将激活的证据。'],
+      ['EP19','第三个寄居者','第三人格“许安”现身，声称自己才是事故后真正被抹除的人，而韩致远准备利用三重意识完成最终实验。'],
+      ['EP20','寄居者','苏言与林影联手终止实验并救出真实林影，但“谁才是真正主人”的问题仍没有答案；她们最终选择共同生活，却发现第四层秘密。']
+    ];
+    document.getElementById('episodeStrip').innerHTML=episodes.map(([ep,title,summary])=>`<article class="episode-card"><small>${ep}</small><h4>${title}</h4><p>${summary}</p></article>`).join('');
+
+    const storyboard=[
+      [1,'00:00–00:02.2','苏言坐在夜晚房间的工作桌前整理画笔，建立“自由插画师”身份','中景，稳定镜头','人物建立'],
+      [2,'00:02.2–00:03.7','苏言拿起彩色画笔，发现排列状态不对','人物近景','第一次异常'],
+      [3,'00:03.7–00:04.4','桌上的玻璃水杯单独出现','道具特写','引出第二异常'],
+      [4,'00:04.4–00:07.1','苏言坐在桌前疑惑地观察桌面','正面中近景','人物反应'],
+      [5,'00:07.1–00:08.4','苏言拿起杯子，杯壁出现明显口红印','手部＋杯子特写','陌生人存在证据'],
+      [6,'00:08.4–00:09.9','苏言惊讶、害怕地看着眼前','面部大特写','恐惧建立'],
+      [7,'00:09.9–00:13.6','苏言沿老旧楼梯向上走，发现新房还有阁楼','脚部低机位跟拍','空间探索'],
+      [8,'00:13.6–00:14.2','老旧阁楼门把手','极近特写','开门悬念'],
+      [9,'00:14.2–00:16.9','苏言站在阁楼入口，面对堆满箱子的昏暗空间','背面中远景','阁楼空间建立'],
+      [10,'00:16.9–00:19.8','她打开旧木箱，发现一本相册','俯侧中近景','核心道具出现'],
+      [11,'00:19.8–00:21.7','苏言看到照片后神情突然变化','面部特写','发现异常照片'],
+      [12,'00:21.7–00:26.3','苏言坐在地上不断翻阅相册','中景','信息累积'],
+      [13,'00:26.3–00:28.9','相册内大量旧照片连续出现','相册俯拍特写','“有人长期记录她”'],
+      [14,'00:28.9–00:30.6','苏言突然回头看向身后','侧后近景','被监视感'],
+      [15,'00:30.6–00:34.0','相册中出现纸条：“你终于看见我了……找了十二年……”','道具大特写','第一重大悬念'],
+      [16,'00:34.0–00:36.7','苏言极度震惊地看着纸条','面部大特写','情绪爆点'],
+      [17,'00:36.7–00:40.6','苏言坐在客厅，身体紧绷、抱住自己，随后报警','中景','报警处理'],
+      [18,'00:40.6–00:45.6','两名警员来到家中调查，提到前租客“林影”半年前失踪','警员双人中景','林影正式进入剧情'],
+      [19,'00:45.6–00:50.6','警察离开后，苏言听见房间里传来轻微响动，慢慢起身','全身中景→低机位','夜间危险开始'],
+      [20,'00:50.6–00:52.5','苏言从厨房刀架抽出一把刀','手部近景','防御动作'],
+      [21,'00:52.5–00:54.0','她拿着刀警惕地靠近衣柜','后侧中景','紧张推进'],
+      [22,'00:54.0–00:55.8','苏言伸手进入柜子深处寻找声音来源','手部特写','搜索'],
+      [23,'00:55.8–00:57.2','找到小型隐藏摄像机，屏幕显示已连续录制178小时','摄像机极近特写','第二重大线索'],
+      [24,'00:57.2–01:02.9','苏言在电脑上播放监控，发现一个黑衣女人在自己房间活动','苏言＋电脑过肩镜头','林影第一次实体出现'],
+      [25,'01:02.9–01:10.2','监控里林影来到苏言睡觉的床边，坐下观察她','监控视角 / 中景','林影与苏言关系升级'],
+      [26,'01:10.2–01:12.6','林影直接面对摄像头微笑，说自己是来“替你活下去的”','屏幕内人物正面近景','全片第一次大反转'],
+      [27,'01:12.6–01:13.7','短暂黑场 / 情绪停顿','黑场','节奏断点'],
+      [28,'01:13.7–01:14.6','苏言惊慌冲向卫生间','移动中景','逃离'],
+      [29,'01:14.6–01:17.7','苏言撑在洗手池前，急促观察镜中的自己','镜面双人构图','身体异常开始'],
+      [30,'01:17.7–01:18.3','镜中苏言突然发现脸部不对','面部极近景','异常发现'],
+      [31,'01:18.3–01:21.6','她摸向眼角附近突然出现的黑痣','面部大特写','林影身体特征出现'],
+      [32,'01:21.6–01:22.1','手指触碰眼角黑痣','极近特写','强调真实性'],
+      [33,'01:22.1–01:23.1','苏言慌乱寻找陌生物品','人物中近景','继续调查'],
+      [34,'01:23.1–01:23.7','陌生深色口红出现','产品式极近特写','林影习惯出现'],
+      [35,'01:23.7–01:24.3','口红上出现与“影”相关的信息','极近特写','与林影建立对应'],
+      [36,'01:24.3–01:25.8','苏言继续翻找，发现从来不抽的薄荷烟和陌生打火机','手部 / 道具近景','生活习惯被替换'],
+      [37,'01:25.8–01:28.3','苏言拿起打火机并点燃，神情越来越不安','中近景','身体熟练度异常'],
+      [38,'01:28.3–01:29.2','苏言重新坐到工作桌前','中景','惯用手线索铺垫'],
+      [39,'01:29.2–01:29.8','双手放在桌面 / 准备拿笔','手部特写','动作铺垫'],
+      [40,'01:29.8–01:30.3','她下意识用右手拿起画笔','手部极近特写','关键身体证据'],
+      [41,'01:30.3–01:32.0','苏言突然意识到不对——自己一直习惯用左手','面部近景','身份开始崩塌'],
+      [42,'01:32.0–01:34.1','她在纸上写下“苏言”等内容，验证自己的行为和记忆','俯拍 / 手部特写','自我确认'],
+      [43,'01:34.1–01:40.2','苏言查看手机，发现原本熟悉的联系人正在消失 / 已经不存在','人物＋手机中近景','记忆与现实同步变化'],
+      [44,'01:40.2–01:43.1','手机屏幕里出现林影的脸，林影直接与苏言对话','手机屏幕极近特写','身份对峙'],
+      [45,'01:43.1–01:48.5','转到白天，苏言坐在桌前，手开始不受自己控制地写字','手部大特写','林影开始控制身体'],
+      [46,'01:48.5–01:50.1','苏言惊恐地看向自己的手 / 身后','人物中近景','控制权丢失'],
+      [47,'01:50.1–01:52.9','苏言面对镜子，镜中的“自己”出现与现实不完全一致的动作和微笑','镜面中景','最核心视觉反转'],
+      [48,'01:52.9–01:53.6','画面回到苏言与身体异常状态，字幕强调“影并没有消失”','中景','真相总结'],
+      [49,'01:53.6–01:58.5','相册再次出现，苏言翻到照片，随后合上相册；旁白落到“多余的房客”','相册特写','首尾闭环'],
+      [50,'01:58.5–01:59.7','黑色片尾出现“林影”','标题卡','全片结束']
+    ];
+    const storyboardRows=document.getElementById('storyboardRows');const storyboardRange=document.getElementById('storyboardRange');const storyboardPrev=document.getElementById('storyboardPrev');const storyboardNext=document.getElementById('storyboardNext');let storyboardPage=0;const storyboardPageSize=10;
+    function renderStoryboard(){const start=storyboardPage*storyboardPageSize;const page=storyboard.slice(start,start+storyboardPageSize);storyboardRows.innerHTML=page.map(row=>`<tr>${row.map(value=>`<td>${value}</td>`).join('')}</tr>`).join('');storyboardRange.textContent=`正在查看镜头 ${start+1}–${Math.min(start+storyboardPageSize,storyboard.length)}，共 ${storyboard.length} 镜`;storyboardPrev.disabled=storyboardPage===0;storyboardNext.disabled=start+storyboardPageSize>=storyboard.length}
+    storyboardPrev.addEventListener('click',()=>{if(storyboardPage>0){storyboardPage--;renderStoryboard();document.getElementById('storyboardPanel').scrollIntoView({behavior:'smooth',block:'start'})}});
+    storyboardNext.addEventListener('click',()=>{if((storyboardPage+1)*storyboardPageSize<storyboard.length){storyboardPage++;renderStoryboard();document.getElementById('storyboardPanel').scrollIntoView({behavior:'smooth',block:'start'})}});
+    renderStoryboard();
+
+    const assetTabs=[...document.querySelectorAll('[data-asset-tab]')];
+    const assetPanels=[...document.querySelectorAll('.asset-panel')];
+    assetTabs.forEach(tab=>tab.addEventListener('click',()=>{const id=tab.dataset.assetTab;assetTabs.forEach(item=>{const on=item===tab;item.classList.toggle('is-active',on);item.setAttribute('aria-selected',String(on))});assetPanels.forEach(panel=>panel.classList.toggle('is-active',panel.id===id))}));
+
+    const characterStage=document.getElementById('characterStage');
+    const characterImage=document.getElementById('characterImage');
+    const characterTitle=document.getElementById('characterTitle');
+    const characterButtons=[...document.querySelectorAll('[data-character-src]')];
+    characterButtons.forEach(button=>button.addEventListener('click',()=>{characterButtons.forEach(item=>item.classList.toggle('is-active',item===button));characterImage.src=button.dataset.characterSrc;characterImage.alt=button.dataset.characterAlt;characterTitle.textContent=button.dataset.characterTitle;characterStage.dataset.full=button.dataset.characterSrc;characterStage.dataset.title=button.dataset.characterTitle}));
+
+    const sceneStrip=document.getElementById('sceneStrip');
+    document.getElementById('scenePrev').addEventListener('click',()=>sceneStrip.scrollBy({left:-sceneStrip.clientWidth*.82,behavior:'smooth'}));
+    document.getElementById('sceneNext').addEventListener('click',()=>sceneStrip.scrollBy({left:sceneStrip.clientWidth*.82,behavior:'smooth'}));
+
+    const items=[...document.querySelectorAll('.asset-open')];
+    const viewer=document.getElementById('viewer');const viewerImage=document.getElementById('viewerImage');const viewerTitle=document.getElementById('viewerTitle');const viewerCount=document.getElementById('viewerCount');let current=0;
+    function render(index){current=(index+items.length)%items.length;const item=items[current];viewerImage.src=item.dataset.full;viewerImage.alt=item.querySelector('img').alt;viewerTitle.textContent=item.dataset.title;viewerCount.textContent=String(current+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0')}
+    items.forEach((item,index)=>item.addEventListener('click',()=>{render(index);viewer.showModal();document.body.classList.add('modal-open')}));
+    function closeViewer(){viewer.close();document.body.classList.remove('modal-open')}
+    viewer.querySelector('.viewer-close').addEventListener('click',closeViewer);viewer.querySelector('.viewer-prev').addEventListener('click',()=>render(current-1));viewer.querySelector('.viewer-next').addEventListener('click',()=>render(current+1));viewer.addEventListener('click',event=>{if(event.target===viewer)closeViewer()});viewer.addEventListener('cancel',event=>{event.preventDefault();closeViewer()});document.addEventListener('keydown',event=>{if(!viewer.open)return;if(event.key==='ArrowLeft')render(current-1);if(event.key==='ArrowRight')render(current+1)});
+  </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>设计作品 — 高一博</title>
+  <meta name="description" content="高一博的海报、Banner 与插画设计作品。">
+  <style>
+    :root {
+      --ink:#111315;
+      --paper:#f2f0ea;
+      --line:rgba(17,19,21,.18);
+      --blue:#078fd2;
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+    body.modal-open{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    img{display:block;max-width:100%}
+    .shell{width:min(calc(100% - 128px),1440px);margin-inline:auto}
+    .topbar{position:relative;z-index:10;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:88px;border-bottom:1px solid var(--line)}
+    .brand{font-size:18px;font-weight:750;letter-spacing:.04em}
+    .brand::before{content:"↗";display:inline-block;margin-right:10px}
+    .nav{display:flex;align-items:center;gap:28px;font-size:16px;font-weight:650}
+    .nav a{padding:12px 0;border-bottom:2px solid transparent;transition:border-color .25s ease}
+    .nav a:hover,.nav a:focus-visible{border-color:currentColor;outline:none}
+    .back{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:1px solid var(--ink);border-radius:999px;font-size:16px;font-weight:700;transition:background .25s,color .25s}
+    .back:hover,.back:focus-visible{background:var(--ink);color:#fff;outline:none}
+    .hero{display:grid;grid-template-columns:7fr 5fr;gap:64px;align-items:end;min-height:510px;padding-block:104px 96px}
+    .eyebrow,.section-index{margin:0 0 16px;font-size:14px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+    h1{margin:0;white-space:nowrap;font-size:clamp(64px,6vw,100px);font-weight:600;letter-spacing:-.065em;line-height:.96}
+    .hero-copy{max-width:560px;padding-bottom:8px}
+    .hero-copy p{margin:0;font-size:20px;line-height:1.7}
+    .hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+    .hero-links a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border:1px solid var(--ink);border-radius:999px;font-size:16px;font-weight:700;transition:background .25s,color .25s}
+    .hero-links a:first-child,.hero-links a:hover,.hero-links a:focus-visible{background:var(--ink);color:#fff;outline:none}
+    .section{padding-block:120px}
+    .section-head{display:grid;grid-template-columns:5fr 7fr;gap:64px;align-items:end;margin-bottom:64px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+    .section-head h2{margin:0;font-size:64px;font-weight:560;letter-spacing:-.05em;line-height:1}
+    .section-intro{max-width:620px;justify-self:end;margin:0;font-size:18px;line-height:1.75}
+    .work-button{position:relative;display:block;width:100%;padding:0;overflow:hidden;border:0;background:#ddd;cursor:zoom-in}
+    .work-button img{width:100%;height:100%;object-fit:cover;transition:transform .75s var(--ease),filter .75s var(--ease)}
+    .work-button:hover img,.work-button:focus-visible img{transform:scale(1.045)}
+    .work-button:focus-visible{outline:3px solid var(--blue);outline-offset:5px}
+    .poster-wall{display:grid}
+    .poster-card{display:grid;grid-template-columns:minmax(220px,3fr) minmax(0,9fr);gap:64px;align-items:center;margin:0;padding:40px 0 0;border-top:1px solid var(--line)}
+    .poster-card .work-button{grid-column:2;grid-row:1;justify-self:center;width:min(100%,680px);height:auto;aspect-ratio:1055/1491;background:transparent}
+    .poster-card .work-button img{object-fit:cover;background:transparent}
+    .poster-card figcaption{grid-column:1;grid-row:1;display:grid;gap:10px;margin:0;font-size:18px;line-height:1.4}
+    .poster-card figcaption span:last-child{color:rgba(17,19,21,.56);font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+    .banner-section{background:#111315;color:#fff}
+    .banner-section .shell{width:min(calc(100% - 128px),1440px)}
+    .banner-section .section-head{border-color:rgba(255,255,255,.22)}
+    .banner-section .section-intro{color:rgba(255,255,255,.72)}
+    .marquee{width:100%;overflow:hidden;padding-bottom:20px}
+    .marquee-track{display:flex;width:max-content;animation:marquee 44s linear infinite}
+    .marquee:hover .marquee-track,.marquee:focus-within .marquee-track{animation-play-state:paused}
+    .marquee-group{display:flex;gap:24px;padding-right:24px}
+    .banner-card{position:relative;flex:0 0 clamp(680px,62vw,940px);margin:0}
+    .banner-card .work-button{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.2);background:#050505}
+    .banner-card figcaption{display:flex;justify-content:space-between;margin-top:16px;color:rgba(255,255,255,.8);font-size:14px}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    .illustration-section{background:#fff}
+    .illustration-browser{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:40px;align-items:start}
+    .illustration-stage{position:relative;justify-self:center;width:min(100%,var(--illustration-width,454px));aspect-ratio:var(--illustration-ratio,.6667);overflow:hidden;background:transparent;transition:width .35s var(--ease),aspect-ratio .35s var(--ease)}
+    .illustration-panel{position:absolute;inset:0;height:100%;opacity:0;pointer-events:none;transform:translateY(18px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+    .illustration-panel.is-active{opacity:1;pointer-events:auto;transform:none}
+    .illustration-panel img{object-fit:cover;background:transparent}
+    .illustration-index{display:grid;align-content:start;border-top:1px solid var(--line)}
+    .illustration-index button{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;min-height:70px;padding:0;border:0;border-bottom:1px solid var(--line);background:transparent;color:rgba(17,19,21,.54);text-align:left;cursor:pointer;font-size:16px;transition:color .25s,background .25s}
+    .illustration-index button::after{content:"↗";opacity:0;transform:translate(-8px,8px);transition:opacity .25s,transform .25s}
+    .illustration-index button:hover,.illustration-index button:focus-visible,.illustration-index button.is-active{background:#f2f0ea;color:var(--ink);outline:none}
+    .illustration-index button.is-active::after{opacity:1;transform:none}
+    .illustration-index small{font-size:12px;letter-spacing:.1em}
+    .next-chapter{background:var(--blue);color:#fff}
+    .next-inner{display:grid;grid-template-columns:8fr 4fr;gap:64px;align-items:end;min-height:520px;padding-block:112px}
+    .next-chapter h2{max-width:1080px;margin:16px 0 0;font-size:clamp(50px,5.6vw,82px);font-weight:560;letter-spacing:-.045em;line-height:1.08;text-wrap:balance}
+    .next-note{max-width:420px;justify-self:end;font-size:18px;line-height:1.75}
+    .next-note a{display:inline-flex;margin-top:24px;padding-bottom:6px;border-bottom:1px solid currentColor;font-size:16px;font-weight:750}
+    .footer{display:flex;justify-content:space-between;gap:24px;padding-block:32px 48px;border-top:1px solid rgba(255,255,255,.35);background:var(--blue);color:rgba(255,255,255,.78);font-size:14px}
+    dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:#0b0c0d;color:#fff}
+    dialog::backdrop{background:#0b0c0d}
+    .viewer{position:relative;isolation:isolate;display:grid;width:100%;height:100%;place-items:center;overflow:hidden;padding:72px 88px 76px}
+    .viewer::before{content:"";position:absolute;z-index:-1;inset:-42px;background-image:var(--viewer-bg);background-position:center;background-size:cover;filter:blur(28px) brightness(.34) saturate(.82);transform:scale(1.08)}
+    .viewer-media{position:relative;width:min(100%,calc((100dvh - 148px) * var(--viewer-ratio,.7076)));aspect-ratio:var(--viewer-ratio,.7076);overflow:hidden;box-shadow:0 26px 90px rgba(0,0,0,.38)}
+    .viewer-media img{width:100%;height:100%;object-fit:cover;transform-origin:center}
+    .viewer-close,.viewer-arrow{position:absolute;z-index:2;display:inline-flex;align-items:center;justify-content:center;min-width:52px;min-height:52px;border:1px solid rgba(255,255,255,.54);background:#111315;color:#fff;cursor:pointer;font-size:16px;font-weight:700}
+    .viewer-close{top:24px;right:32px;padding:0 18px}
+    .viewer-arrow{top:50%;width:52px;border-radius:50%;transform:translateY(-50%);font-size:24px}
+    .viewer-prev{left:24px}.viewer-next{right:24px}
+    .viewer-close:hover,.viewer-arrow:hover,.viewer-close:focus-visible,.viewer-arrow:focus-visible{background:#fff;color:#111;outline:none}
+    .viewer-meta{position:absolute;left:32px;right:32px;bottom:24px;display:flex;justify-content:space-between;gap:24px;color:rgba(255,255,255,.78);font-size:14px;letter-spacing:.06em}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:none}
+    @media(max-width:1100px){
+      .shell,.banner-section .shell{width:min(calc(100% - 64px),1440px)}
+      .topbar{grid-template-columns:1fr auto}.nav{display:none}.hero{grid-template-columns:1fr;min-height:auto;padding-block:88px}.hero-copy{max-width:720px}.section-head{grid-template-columns:1fr;gap:24px}.section-intro{justify-self:start}.poster-card{grid-template-columns:180px minmax(0,1fr);gap:32px}.banner-card{flex-basis:72vw}.illustration-browser{grid-template-columns:minmax(0,1fr) 220px}.next-inner{grid-template-columns:1fr}.next-note{justify-self:start}}
+    @media(max-width:680px){
+      .shell,.banner-section .shell{width:calc(100% - 36px)}
+      .topbar{min-height:72px}.brand{font-size:16px}.back{min-height:44px;padding:0 15px;font-size:15px}
+      .hero{padding-block:64px}.eyebrow,.section-index{font-size:13px}h1{font-size:54px}.hero-copy p{font-size:18px}.hero-links a{min-height:44px;padding:0 18px}
+      .section{padding-block:72px}.section-head{margin-bottom:40px;padding-bottom:24px}.section-head h2{font-size:44px}.section-intro{font-size:16px}
+      .poster-card{grid-template-columns:1fr;gap:18px;padding:32px 0 0}.poster-card .work-button{grid-column:1;grid-row:1;width:100%;height:auto}.poster-card figcaption{grid-column:1;grid-row:2;font-size:16px}
+      .banner-section .section-head{padding-inline:0}.marquee-track{animation-duration:34s}.banner-card{flex-basis:86vw}.marquee-group{gap:14px;padding-right:14px}.banner-card figcaption{font-size:13px}
+      .illustration-browser{grid-template-columns:1fr;gap:24px}.illustration-stage{width:min(100%,var(--illustration-width,454px))}.illustration-index{grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);overflow-x:auto}.illustration-index button{grid-template-columns:34px 1fr;min-height:60px;padding:0 12px}.illustration-index button::after{display:none}
+      .next-inner{min-height:440px;padding-block:72px}.next-chapter h2{font-size:46px;line-height:1.12}.next-note{font-size:16px}.footer{padding-inline:18px}
+      .viewer{padding:68px 18px 82px}.viewer-close{top:14px;right:14px;min-height:44px}.viewer-arrow{top:auto;bottom:18px;min-width:44px;min-height:44px;width:44px;transform:none}.viewer-prev{left:18px}.viewer-next{right:18px}.viewer-meta{left:74px;right:74px;bottom:31px;justify-content:center}.viewer-title{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.marquee-track{animation-play-state:paused}.work-button img{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="topbar shell">
+    <a class="brand" href="/">Yibo Gao</a>
+    <nav class="nav" aria-label="设计作品分类">
+      <a href="#poster">海报</a><a href="#banner">Banner</a><a href="#illustration">插画</a>
+    </nav>
+    <a class="back" href="/">← 返回首页</a>
+  </header>
+
+  <main>
+    <section class="hero shell" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">05 / Design Works</p>
+        <h1 id="page-title">设计作品。</h1>
+      </div>
+      <div class="hero-copy">
+        <p>从静态视觉冲击，到连续画面节奏，再到更自由的图像空间。以不同媒介回应内容、品牌与情绪。</p>
+        <div class="hero-links"><a href="#poster">开始浏览 ↓</a><a href="#banner">Banner</a><a href="#illustration">插画</a></div>
+      </div>
+    </section>
+
+    <section class="section poster-section" id="poster" aria-labelledby="poster-title">
+      <div class="shell">
+        <header class="section-head reveal">
+          <div><p class="section-index">01 / Poster</p><h2 id="poster-title">海报设计</h2></div>
+          <p class="section-intro">页面保留一张主海报作为入口；点击后进入完整海报轮播，按作品原始比例沉浸浏览。</p>
+        </header>
+        <div class="poster-wall"><figure class="poster-card reveal"><button class="work-button" data-full="/assets/design/posters/poster-01.jpg" data-title="溯野 / SOWILD"><img src="/assets/design/posters/poster-01.jpg" width="1055" height="1491" alt="溯野户外主题海报"></button><figcaption><span>溯野 / SOWILD</span><span>点击进入 · 05 张海报轮播</span></figcaption></figure></div>
+      </div>
+    </section>
+
+    <section class="section banner-section" id="banner" aria-labelledby="banner-title">
+      <header class="section-head shell reveal">
+        <div><p class="section-index">02 / Banner</p><h2 id="banner-title">Banner 设计</h2></div>
+        <p class="section-intro">六张横幅以单轨无缝循环持续流动。悬停暂停，点击即可查看完整画面。</p>
+      </header>
+      <div class="marquee" aria-label="Banner 连续作品长廊">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-01.jpg" data-title="SOUND YOUR WAY"><img src="/assets/design/banners/banner-01.jpg" width="1672" height="941" alt="SOUND YOUR WAY 音乐主题 Banner" loading="lazy"></button><figcaption><span>SOUND YOUR WAY</span><span>01 / 06</span></figcaption></figure>
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-02.jpg" data-title="OUTSIDE IS CALLING"><img src="/assets/design/banners/banner-02.jpg" width="1672" height="941" alt="OUTSIDE IS CALLING 户外主题 Banner" loading="lazy"></button><figcaption><span>OUTSIDE IS CALLING</span><span>02 / 06</span></figcaption></figure>
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-03.jpg" data-title="NOW RUSH"><img src="/assets/design/banners/banner-03.jpg" width="1672" height="941" alt="NOW RUSH 游戏主题 Banner" loading="lazy"></button><figcaption><span>NOW RUSH</span><span>03 / 06</span></figcaption></figure>
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-04.jpg" data-title="LILAC NOIR"><img src="/assets/design/banners/banner-04.jpg" width="1672" height="941" alt="LILAC NOIR 紫色人物 Banner" loading="lazy"></button><figcaption><span>LILAC NOIR</span><span>04 / 06</span></figcaption></figure>
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-05.jpg" data-title="FURRYJOY"><img src="/assets/design/banners/banner-05.jpg" width="1672" height="941" alt="宠物食品主题 Banner" loading="lazy"></button><figcaption><span>FURRYJOY</span><span>05 / 06</span></figcaption></figure>
+            <figure class="banner-card"><button class="work-button" data-full="/assets/design/banners/banner-06.jpg" data-title="GAMERLIX"><img src="/assets/design/banners/banner-06.jpg" width="1672" height="941" alt="红色游戏网站主题 Banner" loading="lazy"></button><figcaption><span>GAMERLIX</span><span>06 / 06</span></figcaption></figure>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-01.jpg" alt=""></div><figcaption><span>SOUND YOUR WAY</span><span>01 / 06</span></figcaption></figure>
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-02.jpg" alt=""></div><figcaption><span>OUTSIDE IS CALLING</span><span>02 / 06</span></figcaption></figure>
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-03.jpg" alt=""></div><figcaption><span>NOW RUSH</span><span>03 / 06</span></figcaption></figure>
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-04.jpg" alt=""></div><figcaption><span>LILAC NOIR</span><span>04 / 06</span></figcaption></figure>
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-05.jpg" alt=""></div><figcaption><span>FURRYJOY</span><span>05 / 06</span></figcaption></figure>
+            <figure class="banner-card"><div class="work-button"><img src="/assets/design/banners/banner-06.jpg" alt=""></div><figcaption><span>GAMERLIX</span><span>06 / 06</span></figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section illustration-section" id="illustration" aria-labelledby="illustration-title">
+      <div class="shell">
+        <header class="section-head reveal">
+          <div><p class="section-index">03 / Illustration</p><h2 id="illustration-title">插画创作</h2></div>
+          <p class="section-intro">每张插画按照自身原始比例以适中尺寸预览；点击主画面可进入沉浸式轮播，查看完整细节。</p>
+        </header>
+        <div class="illustration-browser reveal">
+          <div class="illustration-stage">
+            <button class="work-button illustration-panel is-active" data-full="/assets/design/illustrations/illustration-01.jpg" data-title="海岸俯瞰"><img src="/assets/design/illustrations/illustration-01.jpg" width="1024" height="1536" alt="海浪与小船的俯瞰插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-02.jpg" data-title="悉尼晴日"><img src="/assets/design/illustrations/illustration-02.jpg" width="1024" height="1536" alt="悉尼海港晴日插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-03.jpg" data-title="声音少年"><img src="/assets/design/illustrations/illustration-03.jpg" width="1024" height="1536" alt="戴红色耳机的少年插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-04.jpg" data-title="薄荷肖像"><img src="/assets/design/illustrations/illustration-04.jpg" width="736" height="1308" alt="薄荷绿头发人物插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-05.jpg" data-title="金叶少女"><img src="/assets/design/illustrations/illustration-05.jpg" width="736" height="1226" alt="金色落叶中的少女插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-06.jpg" data-title="朱衣"><img src="/assets/design/illustrations/illustration-06.jpg" width="736" height="1308" alt="红色和服人物插画" loading="lazy"></button>
+            <button class="work-button illustration-panel" data-full="/assets/design/illustrations/illustration-07.jpg" data-title="赤墨双生"><img src="/assets/design/illustrations/illustration-07.jpg" width="1080" height="1920" alt="红黑东方人物插画" loading="lazy"></button>
+          </div>
+          <div class="illustration-index" role="tablist" aria-label="选择插画作品">
+            <button class="is-active" type="button" data-illustration="0" aria-selected="true"><small>01</small><span>海岸俯瞰</span></button>
+            <button type="button" data-illustration="1" aria-selected="false"><small>02</small><span>悉尼晴日</span></button>
+            <button type="button" data-illustration="2" aria-selected="false"><small>03</small><span>声音少年</span></button>
+            <button type="button" data-illustration="3" aria-selected="false"><small>04</small><span>薄荷肖像</span></button>
+            <button type="button" data-illustration="4" aria-selected="false"><small>05</small><span>金叶少女</span></button>
+            <button type="button" data-illustration="5" aria-selected="false"><small>06</small><span>朱衣</span></button>
+            <button type="button" data-illustration="6" aria-selected="false"><small>07</small><span>赤墨双生</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="next-chapter" aria-labelledby="next-title">
+      <div class="next-inner shell">
+        <div><p class="section-index">Next / AIGC Video</p><h2 id="next-title">从静态设计，进入动态影像。</h2></div>
+        <p class="next-note">下一章节将把构图、节奏与叙事真正带入时间维度。<br><a href="/videos/">进入 AIGC 视频 →</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell"><span>AIGC CONTENT CREATOR</span><span>© 2026 YIBO GAO</span></footer>
+
+  <dialog id="viewer" aria-label="全屏作品查看器">
+    <div class="viewer">
+      <button class="viewer-close" type="button">× CLOSE</button>
+      <button class="viewer-arrow viewer-prev" type="button" aria-label="上一张">←</button>
+      <div class="viewer-media"><img id="viewerImage" src="" alt=""></div>
+      <button class="viewer-arrow viewer-next" type="button" aria-label="下一张">→</button>
+      <div class="viewer-meta"><span class="viewer-title" id="viewerTitle"></span><span id="viewerCount"></span></div>
+    </div>
+  </dialog>
+
+  <script>
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reveals=document.querySelectorAll('.reveal');
+    if(!reduceMotion&&'IntersectionObserver'in window){
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -6%'});
+      reveals.forEach(item=>observer.observe(item));
+    }else{reveals.forEach(item=>item.classList.add('is-visible'))}
+
+    const works=[...document.querySelectorAll('button.work-button[data-full]')];
+    const posterGallery=[
+      {src:'/assets/design/posters/poster-01.jpg',title:'溯野 / SOWILD',alt:'溯野户外主题海报',ratio:1055/1491},
+      {src:'/assets/design/posters/poster-04.jpg',title:'TRIUMPH',alt:'红黑杂志风人物海报',ratio:1024/1536},
+      {src:'/assets/design/posters/poster-05.jpg',title:'VOGUE / EVELYN',alt:'VOGUE 风格人物封面海报',ratio:1024/1536},
+      {src:'/assets/design/posters/poster-02.jpg',title:'幕间 / MOMENT',alt:'幕间日落风景海报',ratio:1055/1491},
+      {src:'/assets/design/posters/poster-03.jpg',title:'声屿 / SONYU',alt:'声屿山湖主题海报',ratio:1055/1491}
+    ];
+    const viewer=document.getElementById('viewer');
+    const viewerImage=document.getElementById('viewerImage');
+    const viewerTitle=document.getElementById('viewerTitle');
+    const viewerCount=document.getElementById('viewerCount');
+    let current=0;
+    let viewerItems=[];
+    const itemFromButton=item=>{const image=item.querySelector('img');return{src:item.dataset.full,title:item.dataset.title,alt:image.alt,ratio:Number(image.getAttribute('width'))/Number(image.getAttribute('height'))}};
+    function galleryFor(source){
+      const section=source.closest('section')?.id;
+      if(section==='poster')return posterGallery;
+      return works.filter(item=>item.closest('section')?.id===section).map(itemFromButton);
+    }
+    function render(index){
+      current=(index+viewerItems.length)%viewerItems.length;
+      const item=viewerItems[current];
+      viewerImage.src=item.src;
+      viewerImage.alt=item.alt;
+      viewerTitle.textContent=item.title;
+      viewerCount.textContent=String(current+1).padStart(2,'0')+' / '+String(viewerItems.length).padStart(2,'0');
+      viewer.style.setProperty('--viewer-ratio',String(item.ratio||1));
+      viewer.style.setProperty('--viewer-bg',`url("${item.src}")`);
+    }
+    async function openViewer(source){
+      viewerItems=galleryFor(source);
+      const sourceItem=itemFromButton(source);
+      const start=Math.max(0,viewerItems.findIndex(item=>item.src===sourceItem.src));
+      render(start);viewer.showModal();document.body.classList.add('modal-open');
+      if(viewerImage.decode){try{await viewerImage.decode()}catch(error){}}
+      if(!reduceMotion&&viewer.open){
+        const rect=source.getBoundingClientRect();
+        requestAnimationFrame(()=>{
+          const end=viewerImage.getBoundingClientRect();
+          const sx=rect.width/end.width,sy=rect.height/end.height;
+          const tx=rect.left+rect.width/2-(end.left+end.width/2),ty=rect.top+rect.height/2-(end.top+end.height/2);
+          viewerImage.animate([{transform:`translate(${tx}px,${ty}px) scale(${sx},${sy})`,opacity:.45},{transform:'none',opacity:1}],{duration:480,easing:'cubic-bezier(.16,1,.3,1)'});
+        });
+      }
+    }
+    works.forEach(item=>item.addEventListener('click',()=>openViewer(item)));
+    const illustrationPanels=[...document.querySelectorAll('.illustration-panel')];
+    const illustrationTabs=[...document.querySelectorAll('[data-illustration]')];
+    const illustrationStage=document.querySelector('.illustration-stage');
+    function selectIllustration(index){
+      illustrationPanels.forEach((panel,panelIndex)=>panel.classList.toggle('is-active',panelIndex===index));
+      illustrationTabs.forEach((item,itemIndex)=>{item.classList.toggle('is-active',itemIndex===index);item.setAttribute('aria-selected',String(itemIndex===index))});
+      const image=illustrationPanels[index].querySelector('img');
+      const ratio=Number(image.getAttribute('width'))/Number(image.getAttribute('height'));
+      illustrationStage.style.setProperty('--illustration-ratio',String(ratio));
+      illustrationStage.style.setProperty('--illustration-width',`${Math.round(680*ratio)}px`);
+    }
+    illustrationTabs.forEach(tab=>tab.addEventListener('click',()=>selectIllustration(Number(tab.dataset.illustration))));
+    selectIllustration(0);
+    function closeViewer(){viewer.close();document.body.classList.remove('modal-open')}
+    viewer.querySelector('.viewer-close').addEventListener('click',closeViewer);
+    viewer.querySelector('.viewer-prev').addEventListener('click',()=>render(current-1));
+    viewer.querySelector('.viewer-next').addEventListener('click',()=>render(current+1));
+    viewer.addEventListener('click',event=>{if(event.target===viewer)closeViewer()});
+    viewer.addEventListener('cancel',event=>{event.preventDefault();closeViewer()});
+    document.addEventListener('keydown',event=>{if(!viewer.open)return;if(event.key==='ArrowLeft')render(current-1);if(event.key==='ArrowRight')render(current+1)});
+  </script>
+</body>
+</html>
